@@ -1,3 +1,6 @@
+# makefile の変数とか
+# http://quruli.ivory.ne.jp/document/make_3.79.1/make-jp_9.html#index-_0024_0025
+
 TARGET = a.out
 
 DIST ?= ./bin
@@ -6,7 +9,7 @@ SDIR ?= ./src
 
 SRCS := $(shell find $(SDIR) -name *.cpp -or -name *.c)
 OBJS := $(SRCS:$(SDIR)/%.cpp=$(ODIR)/%.o)
-DEPS := $(ASMS:.s=.d)
+
 # file.cpp           C++ ソースファイル
 # file.hpp           C++ ヘッダ (プリプロセッサ) ファイル
 # file.i             プリプロセス済みの ソースファイル
@@ -31,7 +34,7 @@ LDFLAGS ?=
 AS ?= as
 ASFLAGS ?=
 CXX = g++
-CXXFLAGS = -std=c++14 -O1 -Wall
+CXXFLAGS = -std=c++1z -O1 -Wall
 # -v
 #  コンパイルの各ステージで実行されるコマンドを表示
 # -H
@@ -40,9 +43,10 @@ CXXFLAGS = -std=c++14 -O1 -Wall
 
 all : $(DIST)/$(TARGET)
 
-$(DIST)/libhello.so: $(OBJS)
+$(DIST)/libsaori.so: $(OBJS)
 	if [ ! -d $(DIST) ]; then mkdir $(DIST); fi
-	$(CXX)  $(CXXFLAGS) -shared lib/libhello.cpp -o $@
+	$(CXX)  $(CXXFLAGS) -shared lib/libsaori.cpp -o $@
+
 
 # linker: object[] -> exe
 $(DIST)/$(TARGET): $(OBJS)
